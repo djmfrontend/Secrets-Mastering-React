@@ -1,35 +1,68 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { useEffect, useState } from "react";
 
+interface CalendarProps {
+  defaultValue?: Date;
+  onChange?: (date: Date) => void;
+}
+function Calendar(props: CalendarProps) {
+  const { defaultValue = new Date(), onChange } = props;
+  const [value, setValue] = useState(defaultValue);
+  function changeValue(date: Date) {
+    setValue(date);
+    onChange?.(date);
+  }
+  return (
+    <div>
+      {value.toLocaleDateString()}
+
+      <div
+        onClick={() => {
+          changeValue(new Date("2025-4-14"));
+        }}
+      >
+        2025-4-14
+      </div>
+      <div
+        onClick={() => {
+          changeValue(new Date("2025-4-15"));
+        }}
+      >
+        2025-4-15
+      </div>
+      <div
+        onClick={() => {
+          changeValue(new Date("2025-4-16"));
+        }}
+      >
+        2025-4-16
+      </div>
+    </div>
+  );
+}
 function App() {
-  const [count, setCount] = useState(0)
-
+  const [value, setValue] = useState("hello world");
+  const inputRef = React.useRef<HTMLInputElement>(null);
+  useEffect(() => {
+    setTimeout(() => {
+      console.log(inputRef.current?.value);
+    }, 1000);
+  }, []);
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log("change", e);
+    setValue(e.target.value);
+  };
+  console.log("render");
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      {/* <input
+        defaultValue={"hello world"}
+        onChange={onChange}
+        ref={inputRef}
+      ></input> */}
+      {/* <input value={value} onChange={onChange}></input> */}
+      <Calendar onChange={(date) => console.log(date)}></Calendar>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
