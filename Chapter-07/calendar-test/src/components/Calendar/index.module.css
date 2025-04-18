@@ -1,0 +1,17 @@
+.calendar {
+  width: 800px;
+}
+.header {
+  display: flex;
+  justify-content: space-between;
+}
+.days {
+  display: flex;
+  flex-wrap: wrap;
+}
+.day,
+.empty {
+  width: calc(100% / 7);
+  text-align: center;
+  line-height: 30px;
+}
