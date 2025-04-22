@@ -31,4 +31,13 @@ let nextUnitOfWork = null;
 let wipRoot = null;
 let currentRoot = null;
 
-function render() {}
+function render(element, container) {
+  wipRoot = {
+    dom: container,
+    props: {
+      children: [element],
+    },
+    alternate: currentRoot,
+  };
+  nextUnitOfWork = wipRoot;
+}
